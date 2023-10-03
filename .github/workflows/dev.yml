@@ -67,7 +67,7 @@ jobs:
           echo "::set-env name=FINAL_IMAGE_NAME::${{ steps.meta.outputs.labels }}:${{ steps.meta.outputs.tags }}"
 
   deploy:
-    needs: publish
+    needs: build-and-publish-dev
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
