@@ -4,7 +4,6 @@ public class Car {
     Light light;
 
     Engine engine;
-
     public Car() {
         this.light = new Light(false, "HALF", false);
         this.engine = new Engine(false);
