@@ -33,4 +33,12 @@ test {
     finalizedBy jacocoTestReport
 }
 
+bootJar {
+    archiveFileName = "${archiveBaseName.get()}.${archiveExtension.get()}"
+}
+
+jar {
+    enabled = false
+}
+
 jacocoTestReport { dependsOn test reports { xml.required = true } }
