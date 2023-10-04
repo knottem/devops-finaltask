@@ -1,8 +1,6 @@
 name: Java Gradle Testing and Publishing on Dev Branch
 
 on:
-  push:
-    branches: [ "dev" ]
   pull_request:
     branches: [ "dev" ]
 
@@ -32,6 +30,8 @@ jobs:
   build-and-publish-dev:
     needs: testing-dev
     runs-on: ubuntu-latest
+    outputs:
+      tags: ${{ steps.meta.outputs.tags }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -62,15 +62,12 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Set Docker image name
-        run: echo "DOCKER_IMAGE_NAME=${{ steps.meta.outputs.tags }}" >> $GITHUB_ENV
 
   deploy:
     needs: build-and-publish-dev
@@ -80,5 +77,5 @@ jobs:
         uses: actions/checkout@v3
       - name: Deploy to Dev
         run: |
-          echo "Deploying to Dev with image $DOCKER_IMAGE_NAME"
+          echo "Deploying to Dev with image ${{ needs.build-and-publish-dev.outputs.tags }}"
           echo "Deployment done"

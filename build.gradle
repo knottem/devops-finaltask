@@ -23,6 +23,53 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
+sourceSets {
+    testIntegration {
+        java.srcDir file('src/testIntegration/java')
+        resources.srcDir file('src/testIntegration/resources')
+        compileClasspath += sourceSets.main.output + sourceSets.test.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
+    }
+    testSystem {
+        java.srcDir file('src/testSystem/java')
+        resources.srcDir file('src/testSystem/resources')
+        compileClasspath += sourceSets.main.output + sourceSets.test.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
+    }
+}
+
+configurations {
+    testIntegrationImplementation.extendsFrom testImplementation
+    testIntegrationRuntimeOnly.extendsFrom testRuntimeOnly
+    testSystemImplementation.extendsFrom testImplementation
+    testSystemRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+tasks.register('testIntegration', Test) {
+    mustRunAfter test
+    useJUnitPlatform()
+    testLogging {
+        events "PASSED", "FAILED", "SKIPPED"
+    }
+    testClassesDirs = sourceSets.testIntegration.output.classesDirs
+    classpath = sourceSets.testIntegration.runtimeClasspath
+}
+
+tasks.register('testSystemIntegration', Test) {
+    mustRunAfter test
+    useJUnitPlatform()
+    testLogging {
+        events "PASSED", "FAILED", "SKIPPED"
+    }
+    testClassesDirs = sourceSets.testSystem.output.classesDirs
+    classpath = sourceSets.testSystem.runtimeClasspath
+}
+
+tasks.register('allTests') {
+    dependsOn test, testIntegration, testSystemIntegration
+    description = 'Run all tests (unit, integration, and system tests)'
+}
+
 test {
     useJUnitPlatform{
         failFast = true
@@ -42,3 +89,5 @@ jar {
 }
 
 jacocoTestReport { dependsOn test reports { xml.required = true } }
+
+check.dependsOn testIntegration, testSystemIntegration
