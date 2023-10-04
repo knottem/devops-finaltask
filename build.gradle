@@ -66,7 +66,7 @@ tasks.register('testSystem', Test) {
 }
 
 tasks.register('allTests') {
-    dependsOn test, testIntegration, testSystemIntegration
+    dependsOn test, testIntegration, testSystem
     description = 'Run all tests (unit, integration, and system tests)'
 }
 

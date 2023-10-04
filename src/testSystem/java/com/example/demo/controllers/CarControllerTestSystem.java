@@ -32,4 +32,15 @@ class CarControllerTestSystem {
                 .body("light", notNullValue())
                 .body("engine", notNullValue());
     }
+
+    @Test
+    void getCarInvalidEndpoint() {
+        given()
+                .when()
+                .get("/invalidEndpoint")
+                .then()
+                .statusCode(404);
+    }
+
+
 }

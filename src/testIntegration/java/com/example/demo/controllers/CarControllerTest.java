@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest()
+@SpringBootTest
 @AutoConfigureMockMvc
 class CarControllerTest {
 
@@ -28,5 +28,11 @@ class CarControllerTest {
         mockMvc.perform(get("/car"))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"light\":{\"frontLightStatus\":false,\"frontLightMode\":\"HALF\",\"backLightStatus\":false},\"engine\":{\"engineStatus\":false}}"));
+    }
+
+    @Test
+    void getCarInvalidEndpoint() throws Exception {
+        mockMvc.perform(get("/invalidEndpoint"))
+                .andExpect(status().isNotFound());
     }
 }
