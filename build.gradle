@@ -90,4 +90,4 @@ jar {
 
 jacocoTestReport { dependsOn test reports { xml.required = true } }
 
-check.dependsOn testIntegration, testSystemIntegration
+check.dependsOn testIntegration, testSystem
