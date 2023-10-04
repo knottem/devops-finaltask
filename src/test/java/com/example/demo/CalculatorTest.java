@@ -80,8 +80,8 @@ class CalculatorTest {
     }
 
     @Test
-    public void shouldTotallyNotWork() {
-        assertEquals(0, c.calculate(2, 3, "add"));
+    public void shouldTotallyNotWorkFIXED() {
+        assertEquals(5, c.calculate(2, 3, "add"));
     }
 
 }
