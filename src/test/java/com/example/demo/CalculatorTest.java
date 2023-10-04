@@ -79,4 +79,9 @@ class CalculatorTest {
         assertEquals(0, c.calculate(2, 3, ""));
     }
 
+    @Test
+    public void shouldTotallyNotWork() {
+        assertEquals(0, c.calculate(2, 3, "add"));
+    }
+
 }
