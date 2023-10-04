@@ -13,7 +13,7 @@ permissions:
   packages: write
 
 jobs:
-  testing-dev:
+  test-unit-dev:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -24,11 +24,39 @@ jobs:
           distribution: 'temurin'
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2.8.1
-      - name: Execute Gradle Test
+      - name: Execute Unit Tests
         run: ./gradlew test
 
+  test-integration-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.8.1
+      - name: Execute Integration Tests
+        run: ./gradlew testIntegration
+
+  test-system-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.8.1
+      - name: Execute System Tests
+        run: ./gradlew testSystem
+
   build-and-publish-dev:
-    needs: testing-dev
+    needs: [ test-unit-dev, test-integration-dev, test-system-dev]
     runs-on: ubuntu-latest
     outputs:
       tags: ${{ steps.meta.outputs.tags }}
