@@ -47,7 +47,9 @@ configurations {
 
 tasks.register('testIntegration', Test) {
     mustRunAfter test
-    useJUnitPlatform()
+    useJUnitPlatform {
+        failFast = true
+    }
     testLogging {
         events "PASSED", "FAILED", "SKIPPED"
     }
@@ -57,7 +59,9 @@ tasks.register('testIntegration', Test) {
 
 tasks.register('testSystem', Test) {
     mustRunAfter test
-    useJUnitPlatform()
+    useJUnitPlatform {
+        failFast = true
+    }
     testLogging {
         events "PASSED", "FAILED", "SKIPPED"
     }
@@ -68,6 +72,7 @@ tasks.register('testSystem', Test) {
 tasks.register('allTests') {
     dependsOn test, testIntegration, testSystem
     description = 'Run all tests (unit, integration, and system tests)'
+    finalizedBy jacocoTestReport
 }
 
 test {
