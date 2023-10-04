@@ -55,7 +55,7 @@ tasks.register('testIntegration', Test) {
     classpath = sourceSets.testIntegration.runtimeClasspath
 }
 
-tasks.register('testSystemIntegration', Test) {
+tasks.register('testSystem', Test) {
     mustRunAfter test
     useJUnitPlatform()
     testLogging {
