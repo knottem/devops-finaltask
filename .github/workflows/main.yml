@@ -13,20 +13,10 @@ permissions:
   contents: read
   packages: write
 
-
 jobs:
-  check-source-branch:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check if PR is from 'dev' branch
-        run: |
-          if [[ "${{ github.event.pull_request.head.ref }}" != "dev" ]]; then
-            echo "Error: You can only merge from the 'dev' branch into 'main'."
-            exit 1
-          fi
 
   build-and-publish-main:
-    needs: check-source-branch
+    if: github.event.pull_request.head.ref == 'dev'
     runs-on: ubuntu-latest
     outputs:
       tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
