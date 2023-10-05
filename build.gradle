@@ -33,6 +33,8 @@ sourceSets {
     testSystem {
         java.srcDir file('src/testSystem/java')
         resources.srcDir file('src/testSystem/resources')
+        compileClasspath += sourceSets.main.output + sourceSets.test.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
     }
 }
 
