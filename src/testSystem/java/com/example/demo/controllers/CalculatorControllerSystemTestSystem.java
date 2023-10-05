@@ -69,7 +69,7 @@ public class CalculatorControllerSystemTestSystem {
     void shouldReturnZeroForInvalidOperator() {
         given()
                 .when()
-                .get("/calculate/5/3/invalidOperator")
+                    .get("/calculate/5/3/invalidOperator")
                 .then()
                 .statusCode(200)
                 .assertThat()
