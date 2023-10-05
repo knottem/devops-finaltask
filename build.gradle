@@ -82,7 +82,6 @@ test {
     testLogging {
         events "passed", "skipped", "failed"
     }
-    finalizedBy jacocoTestReport
 }
 
 bootJar {
@@ -93,6 +92,10 @@ jar {
     enabled = false
 }
 
-jacocoTestReport { dependsOn test reports { xml.required = true } }
+jacocoTestReport {
+    dependsOn allTests reports {
+        xml.required = true
+    }
+}
 
 check.dependsOn testIntegration, testSystem
