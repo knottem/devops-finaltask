@@ -9,16 +9,13 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.notNullValue;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class CarControllerTest {
-
-    @LocalServerPort
-    private int port;
+@SpringBootTest()
+class CarControllerTestSystem {
 
     @BeforeEach
     void setUp(){
         RestAssured.baseURI = "http://localhost";
-        RestAssured.port = port;
+        RestAssured.port = 8080;
     }
 
     @Test
@@ -32,4 +29,15 @@ class CarControllerTest {
                 .body("light", notNullValue())
                 .body("engine", notNullValue());
     }
+
+    @Test
+    void getCarInvalidEndpoint() {
+        given()
+                .when()
+                .get("/invalidEndpoint")
+                .then()
+                .statusCode(404);
+    }
+
+
 }
