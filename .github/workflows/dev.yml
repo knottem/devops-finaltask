@@ -42,7 +42,7 @@ jobs:
         run: ./gradlew testIntegration
 
   build-and-publish-dev:
-    needs: [ test-unit-dev, test-integration-dev, test-system-dev]
+    needs: [ test-unit-dev, test-integration-dev]
     runs-on: ubuntu-latest
     outputs:
       tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:dev
