@@ -58,7 +58,6 @@ tasks.register('testIntegration', Test) {
 }
 
 tasks.register('testSystem', Test) {
-    mustRunAfter test
     useJUnitPlatform {
         failFast = true
     }
@@ -71,7 +70,7 @@ tasks.register('testSystem', Test) {
 
 tasks.register('allTests') {
     dependsOn test, testIntegration, testSystem
-    description = 'Run all tests (unit, integration, and system tests)'
+    description = 'Runs all tests (unit, integration, system)'
     finalizedBy jacocoTestReport
 }
 
