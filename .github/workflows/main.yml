@@ -5,6 +5,15 @@ on:
     branches:
       - main
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+permissions:
+  contents: read
+  packages: write
+
+
 jobs:
   check-source-branch:
     runs-on: ubuntu-latest
