@@ -33,8 +33,6 @@ sourceSets {
     testSystem {
         java.srcDir file('src/testSystem/java')
         resources.srcDir file('src/testSystem/resources')
-        compileClasspath += sourceSets.main.output + sourceSets.test.output
-        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
     }
 }
 
@@ -58,7 +56,6 @@ tasks.register('testIntegration', Test) {
 }
 
 tasks.register('testSystem', Test) {
-    mustRunAfter test
     useJUnitPlatform {
         failFast = true
     }
@@ -71,7 +68,7 @@ tasks.register('testSystem', Test) {
 
 tasks.register('allTests') {
     dependsOn test, testIntegration, testSystem
-    description = 'Run all tests (unit, integration, and system tests)'
+    description = 'Runs all tests (unit, integration, system)'
     finalizedBy jacocoTestReport
 }
 

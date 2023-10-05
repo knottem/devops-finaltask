@@ -9,16 +9,13 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.notNullValue;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest()
 class CarControllerTestSystem {
-
-    @LocalServerPort
-    private int port;
 
     @BeforeEach
     void setUp(){
         RestAssured.baseURI = "http://localhost";
-        RestAssured.port = port;
+        RestAssured.port = 8080;
     }
 
     @Test
