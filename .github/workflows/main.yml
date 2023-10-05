@@ -16,11 +16,16 @@ permissions:
 jobs:
 
   build-and-publish-main:
-    if: github.event.pull_request.head.ref == 'dev'
     runs-on: ubuntu-latest
     outputs:
       tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
     steps:
+      - name: Check if PR is from 'dev' branch
+        run: |
+          if [[ "${{ github.event.pull_request.head.ref }}" != "dev" ]]; then
+            echo "Error: You can only merge from the 'dev' branch into 'main'."
+            exit 1
+          fi
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -56,7 +61,6 @@ jobs:
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           labels: ${{ steps.meta.outputs.labels }}
-
 
   deploy-main:
     needs: build-and-publish-main
