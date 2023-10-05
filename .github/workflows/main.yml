@@ -16,7 +16,7 @@ jobs:
             exit 1
           fi
 
-  build-and-publish-dev:
+  build-and-publish-main:
     needs: check-source-branch
     runs-on: ubuntu-latest
     outputs:
@@ -59,8 +59,8 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
 
-  deploy:
-    needs: system-testing-dev
+  deploy-main:
+    needs: build-and-publish-main
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
